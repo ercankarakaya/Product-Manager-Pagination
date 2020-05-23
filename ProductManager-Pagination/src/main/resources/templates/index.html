@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <title>home</title>
+    <style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+   }
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container" style="background-color: white;">
+    <div class="center">
+        <h2 align="center">Porduct Manager</h2>
+        &nbsp;
+        <table id="customers" class="table table-striped">
+
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Product Adı</th>
+                <th scope="col">Marka</th>
+                <th scope="col"> Ülke</th>
+                <th scope="col">Price</th>
+                <th scope="col">İşlem</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+
+            <tr th:each="product: ${productList}">
+                <td th:text="${product.id}">a</td>
+                <td th:text="${product.name}">b</td>
+                <td th:text="${product.brand}">c</td>
+                <td th:text="${product.madein}">d</td>
+                <td th:text="${product.price}">e</td>
+                <td></td>
+            </tr>
+
+
+            </tbody>
+        </table>
+        <div>&nbsp;</div>
+        <div>
+            Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPage>1}" th:href="@{/page/1}">First</a>
+            <span th:unless="${currentPage>1}">First</span>
+            &nbsp;
+            <a th:if="${currentPage>1}" th:href="@{'/page/' + ${currentPage-1}}">Previous</a>
+            <span th:unless="${currentPage>1}">Previous</span>
+            &nbsp;
+            <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+        	<a th:if="${i!=currentPage}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+            <span th:unless="${i!=currentPage}">[[${i}]]</span>
+            &nbsp;&nbsp;
+        	</span>
+            &nbsp;
+            <a th:if="${currentPage<totalPages}" th:href="@{'/page/' + ${currentPage+1}}">Next</a>
+            <span th:unless="${currentPage<totalPages}">Next</span>
+            &nbsp;
+            <a th:if="${currentPage<totalPages}" th:href="@{'/page/'+${totalPages}}">Last</a>
+            <span th:unless="${currentPage<totalPages}">Last</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
